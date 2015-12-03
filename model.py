@@ -47,6 +47,10 @@ class User(Base):
     image_192 = Column('image_192', String(255))
     image_original = Column('image_original', String(255))
 
+    def __repr__(self):
+        return "<model.User '{} - {}'>".format(self.name.encode('utf8'),
+                                               self.real_name.encode('utf8'))
+
 
 def get_session():
     engine = create_engine(

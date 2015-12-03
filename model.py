@@ -26,7 +26,7 @@ class WordEntry(Base):
 
     def next(self, session):
         words = session.query(WordEntry)\
-            .filter(WordEntry.word_prev == self.word_next)\
+            .filter(WordEntry.user == self.user, WordEntry.word_prev == self.word_next)\
             .order_by(desc(WordEntry.count)).limit(10)
         return random.choice(list(words))
 

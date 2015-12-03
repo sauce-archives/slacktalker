@@ -31,6 +31,23 @@ class WordEntry(Base):
         return random.choice(list(words))
 
 
+class User(Base):
+
+    __tablename__ = 'users'
+
+    id = Column('id', String(9), primary_key=True)
+    name = Column('name', String(255))
+    real_name = Column('real_name', String(255))
+    first_name = Column('first_name', String(255))
+    last_name = Column('last_name', String(255))
+    image_24 = Column('image_24', String(255))
+    image_32 = Column('image_32', String(255))
+    image_48 = Column('image_48', String(255))
+    image_72 = Column('image_72', String(255))
+    image_192 = Column('image_192', String(255))
+    image_original = Column('image_original', String(255))
+
+
 def get_session():
     engine = create_engine(
         'mysql://root:***REMOVED***@localhost/slacktalker?charset=utf8')

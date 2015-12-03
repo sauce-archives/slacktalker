@@ -5,7 +5,7 @@ import model
 from sqlalchemy.sql.expression import func
 
 
-SENTENCE_WORD_LIMIT = 10
+SENTENCE_WORD_LIMIT = 100
 
 
 session = model.get_session()

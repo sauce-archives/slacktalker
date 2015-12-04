@@ -10,7 +10,7 @@ import model
 def generate(username):
     try:
         return make_sentence.make_sentence(username)
-    except exceptions.UserNotFoundException as e:
+    except exceptions.TalkerException as e:
         return str(e)
 
 

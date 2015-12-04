@@ -47,6 +47,9 @@ def make_sentence(username):
     word = session.query(model.WordEntry)\
         .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == '')\
         .order_by(func.rand()).first()
+    if not word:
+        raise exceptions.UserHasntSpoken(
+            'I haven\'t seen "{}" say anything'.format(username))
 
     word = word.word_next
     sentence += word

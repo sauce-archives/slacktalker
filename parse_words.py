@@ -92,10 +92,10 @@ def parse_file(filename):
                 word_entry.word_next = word_next
                 word_entry.count = 0
             word_entry.count += 1
-            print word_entry
+            
             session.add(word_entry)
 
-       # session.commit()
+        session.commit()
 
 
 if __name__ == '__main__':

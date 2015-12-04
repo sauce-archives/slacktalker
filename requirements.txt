@@ -19,4 +19,5 @@ simplegeneric==0.8.1
 sqlacodegen==1.1.6
 sqlautocode==0.7
 traitlets==4.0.0
+uWSGI==2.0.11.2
 wsgiref==0.1.2

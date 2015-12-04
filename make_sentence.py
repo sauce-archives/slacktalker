@@ -13,16 +13,21 @@ SENTENCE_WORD_LIMIT = 100
 
 session = model.get_session()
 
-def get_next_word(username, word):
+def get_next_word(user, word):
     words = session.query(WordEntry)\
             .filter(WordEntry.word_prev == word)\
-            .order_by(desc(WordEntry.count)).limit(500)
+            .order_by(desc(WordEntry.count)).limit(10)
+
+    user_words = session.query(WordEntry)\
+            .filter(WordEntry.user == user.id, WordEntry.word_prev == word)\
+            .order_by(desc(WordEntry.count)).limit(10)
 
     candidates = []
+    for w in user_words:
+        for i in range(PERSONALITY_WEIGHT):
+            candidates.append(w.word_next)
+        
     for w in words:
-        if w.user == username:
-            for i in range(PERSONALITY_WEIGHT):
-                candidates.append(w.word_next)
         candidates.append(w.word_next)
 
     result = random.choice(candidates)
@@ -45,7 +50,7 @@ def make_sentence(username):
         next_word = word.word_next
         sentence += next_word
         for i in xrange(SENTENCE_WORD_LIMIT):
-            next_word = get_next_word(username, next_word)
+            next_word = get_next_word(user, next_word)
             if next_word:
                 sentence += ' ' + next_word
             else:

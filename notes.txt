@@ -1,1 +1,0 @@
-sqlacodegen mysql://root:***REMOVED***@localhost/sauce

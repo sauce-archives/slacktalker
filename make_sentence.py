@@ -1,5 +1,4 @@
-import sys
-
+import talker_exceptions as exceptions
 import model
 
 from sqlalchemy.sql.expression import func
@@ -17,7 +16,8 @@ def make_sentence(username):
     user = session.query(model.User).filter(
         model.User.name==username).first()
     if not user:
-        raise Exception('Username {} not found'.format(username))
+        raise exceptions.UserNotFoundException(
+            'Username "{}" not found'.format(username))
 
     sentence = ''
     # Load up an initial random word
@@ -31,4 +31,4 @@ def make_sentence(username):
             sentence += ' ' + word.word_next
         else:
             break
-    return "*{}:* ".format(str(user)) + sentence
+    return "*{}:* ".format(str(user)) + str(sentence)

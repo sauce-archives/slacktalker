@@ -53,10 +53,10 @@ class User(Base):
 
     def __str__(self):
         if self.real_name:
-            return self.real_name
+            return self.real_name.encode('utf8')
         if self.first_name and self.last_name:
-            return "{} {}".format(self.first_name, self.last_name)
-        return self.name
+            return "{} {}".format(self.first_name.encode('utf8'), self.last_name.encode('utf8'))
+        return self.name.encode('utf8')
 
 
 def get_session():

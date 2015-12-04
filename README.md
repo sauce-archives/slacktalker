@@ -1,3 +1,8 @@
+About
+-----
+
+This runs on `slacktalker.dev.saucelabs.net`.  The main web application is running via nginx and uwsgi.  All code is deployed under the sauce user.  There's no fancy upstart script for uwsgi -- it's just running as a background job.
+
 Deploying
 ---------
 

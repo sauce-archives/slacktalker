@@ -14,7 +14,8 @@ session = model.get_session()
 def make_sentence(username):
 
     # Try to find the user
-    user = session.query(model.User).filter(model.User.name==username).first()
+    user = session.query(model.User).filter(
+        model.User.name==username).first()
     if not user:
         raise Exception('Username {} not found'.format(username))
 
@@ -30,4 +31,4 @@ def make_sentence(username):
             sentence += ' ' + word.word_next
         else:
             break
-    return sentence
+    return "*{}:* ".format(str(user)) + sentence

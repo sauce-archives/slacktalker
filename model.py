@@ -51,6 +51,13 @@ class User(Base):
         return "<model.User '{} - {}'>".format(self.name.encode('utf8'),
                                                self.real_name.encode('utf8'))
 
+    def __str__(self):
+        if self.real_name:
+            return self.real_name
+        if self.first_name and self.last_name:
+            return "{} {}".format(self.first_name, self.last_name)
+        return self.name
+
 
 def get_session():
     engine = create_engine(

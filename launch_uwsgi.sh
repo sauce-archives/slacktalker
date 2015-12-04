@@ -1,1 +1,2 @@
-uwsgi -s /tmp/uwsgi.sock --module webapp --callable app --chmod-socket=666
+pkill uwsgi
+uwsgi -s /tmp/uwsgi.sock --module webapp --callable app --chmod-socket=666 &

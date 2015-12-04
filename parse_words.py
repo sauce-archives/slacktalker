@@ -1,10 +1,40 @@
 import json
+import os
+import pickle
 import sys
 
 import model
 
 
+# Keep track of the last loaded version of each channel
+MEMORY = 'pickle.db'
+try:
+    with open(MEMORY, 'rb') as f:
+        memory = pickle.load(f)
+except IOError:
+    memory = {}
+
+
+def get_last_loaded(channel):
+    return memory.get(channel)
+
+
+def set_last_loaded(channel, last_loaded):
+    memory[channel] = last_loaded
+
+
+def save_memory():
+    with open(MEMORY, 'wb') as f:
+        pickle.dump(memory, f)
+
+
 session = model.get_session()
+
+
+def get_channel_name_and_date(filename):
+    channel = os.path.split(os.path.split(filename)[0])[1]
+    date = os.path.split(filename)[1].split('.json')[0]
+    return channel, date
 
 
 def parse_file(filename):
@@ -72,5 +102,13 @@ if __name__ == '__main__':
     filenames = sys.argv[1:]
 
     for filename in filenames:
-        print "Parsing file: {}".format(filename)
-        parse_file(filename)
+        channel, date = get_channel_name_and_date(filename)
+        last_loaded = get_last_loaded(channel)
+        if last_loaded >= date:
+            print "Skipping file: {}.  Already loaded up to {} for channel {}"\
+                .format(filename, last_loaded, channel)
+        else:
+            print "Parsing file: {}".format(filename)
+            parse_file(filename)
+            set_last_loaded(channel, date)
+            save_memory()

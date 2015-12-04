@@ -33,8 +33,7 @@ def get_next_word(user, word, last_words):
     result = random.choice(candidates)
     return result
 
-
-def make_sentence(username):
+def make_sentence(username, prompt=""):
     sentence = ''
     # Try to find the user
     user = session.query(model.User).filter(model.User.name==username).first()
@@ -43,14 +42,19 @@ def make_sentence(username):
             'Username "{}" not found'.format(username))
 
     sentence = ''
-    # Load up an initial random word
-    word = session.query(model.WordEntry)\
-        .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == '')\
-        .order_by(func.rand()).first()
+    if prompt: # Load up an initial word
+        word = session.query(model.WordEntry)\
+            .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == prompt)\
+            .order_by(func.rand()).first()
+    if word:
+        sentence += word.word_prev + " "
+    else:
+        word = session.query(model.WordEntry)\
+            .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == '')\
+            .order_by(func.rand()).first()
     if not word:
         raise exceptions.UserHasntSpoken(
             'I haven\'t seen "{}" say anything'.format(username))
-
     word = word.word_next
     sentence += word
     for i in xrange(SENTENCE_WORD_LIMIT):

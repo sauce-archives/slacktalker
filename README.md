@@ -3,6 +3,13 @@ About
 
 This runs on `slacktalker.dev.saucelabs.net`.  The main web application is running via nginx and uwsgi.  All code is deployed under the sauce user.  There's no fancy upstart script for uwsgi -- it's just running as a background job.
 
+Loading New Data
+================
+
+Unfortunately, we don't have a Slack Plus account, so loading new chat data must be done semi-manually.  Basically, get an export from here: `https://get.slack.help/hc/en-us/articles/201658943-Exporting-your-team-s-Slack-history`
+
+Drop the zip file in `/home/sauce/slack-export.zip` and make sure the owner and group are both `sauce`.  The cron jobs should load the new data automatically.
+
 Deploying
 =========
 
@@ -24,3 +31,4 @@ Data-loading
  * `parse_users.py` - takes the `users.json` file from the slack export and loads up the users into the users table
  * `parse_words.py` - loads up words from the various channels and puts them into the database
  * `model.py` - the models for interacting with the DB.  If run directly, this will build the tables needed for loading data
+ * `crontab.sauce` - the crontab responsible for looking for updated data and auto-loading it

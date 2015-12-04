@@ -41,15 +41,16 @@ def make_sentence(username, prompt=""):
 
     sentence = ''
     # there's probably a nicer way to write this
-    if not prompt: # Load up an initial word
-        word = session.query(model.WordEntry)\
-            .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == '')\
-            .order_by(func.rand()).first()
-    else:
+    if prompt: # Load up an initial word
         word = session.query(model.WordEntry)\
             .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == prompt)\
             .order_by(func.rand()).first()
-        sentence += word.word_prev
+    if word:
+        sentence += word.word_prev + " "
+    else:
+        word = session.query(model.WordEntry)\
+            .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == '')\
+            .order_by(func.rand()).first()
     word = word.word_next
     sentence += word
     for i in xrange(SENTENCE_WORD_LIMIT):

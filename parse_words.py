@@ -45,7 +45,27 @@ def parse_file(filename):
                 word_entry.count = 0
             word_entry.count += 1
             session.add(word_entry)
-        session.commit()
+
+        #two word combos
+        for i, word_next in enumerate(words):
+            if i<2:
+                continue
+            word_prev = '%s %s' % (words[i-2].lower()[:254], words[i-1].lower()[:254] )
+            word_entry = session.query(model.WordEntry).filter(
+                model.WordEntry.user==user,
+                model.WordEntry.word_prev==word_prev,
+                model.WordEntry.word_next==word_next).first()
+            if not word_entry:
+                word_entry = model.WordEntry()
+                word_entry.user = user
+                word_entry.word_prev = word_prev
+                word_entry.word_next = word_next
+                word_entry.count = 0
+            word_entry.count += 1
+            print word_entry
+            session.add(word_entry)
+
+       # session.commit()
 
 
 if __name__ == '__main__':

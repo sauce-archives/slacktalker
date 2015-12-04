@@ -78,6 +78,7 @@ def parse_file(filename):
 
         #two word combos
         for i, word_next in enumerate(words):
+            word_next = word_next.lower()[:254]
             if i<2:
                 continue
             word_prev = '%s %s' % (words[i-2].lower()[:254], words[i-1].lower()[:254] )

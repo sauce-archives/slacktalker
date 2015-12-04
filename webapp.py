@@ -5,11 +5,11 @@ import talker_exceptions as exceptions
 import make_sentence
 import model
 
-
-@app.route('/generate/<username>/')
-def generate(username):
+@app.route('/generate/<username>')
+@app.route('/generate/<username>/<prompt>')
+def generate(username, prompt=""):
     try:
-        return make_sentence.make_sentence(username)
+        return make_sentence.make_sentence(username, prompt)
     except exceptions.UserNotFoundException as e:
         return str(e)
 

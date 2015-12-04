@@ -31,4 +31,4 @@ def make_sentence(username):
             sentence += ' ' + word.word_next
         else:
             break
-    return "*{}:* ".format(str(user)) + str(sentence)
+    return "*{}:* ".format(str(user)) + str(sentence.encode('utf8'))

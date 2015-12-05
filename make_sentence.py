@@ -20,7 +20,7 @@ def get_next_word(user, word, last_words):
 
     user_word_pairs = session.query(WordEntry)\
             .filter(WordEntry.user == user.id, WordEntry.word_prev == last_words)\
-            .order_by(desc(WordEntry.count)).limit(10)
+            .order_by(desc(WordEntry.count)).limit(5)
 
     candidates = []
     for w in user_words:

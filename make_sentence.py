@@ -42,6 +42,7 @@ def make_sentence(username, prompt=""):
             'Username "{}" not found'.format(username))
 
     sentence = ''
+    word = ''
     if prompt: # Load up an initial word
         word = session.query(model.WordEntry)\
             .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == prompt)\

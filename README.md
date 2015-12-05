@@ -13,7 +13,7 @@ Drop the zip file in `/home/sauce/slack-export.zip` and make sure the owner and 
 Deploying
 =========
 
-Run `update_repo.sh` to change to the sauce user and pull down the latest git commit.  You'll need to have SSH agent forwarding enabled when connecting to the box.
+As *your user*, run `update_repo.sh` to change to the sauce user and pull down the latest git commit.  You'll need to have SSH agent forwarding enabled when connecting to the box.  Then, change to the sauce user and run `launch_uwsgi.sh`.
 
 Files
 =====

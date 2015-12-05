@@ -1,4 +1,4 @@
-import sys, math, random
+import sys, math, random, re
 
 import model
 from model import WordEntry
@@ -65,4 +65,11 @@ def make_sentence(username, prompt=""):
             sentence += ' ' + word
         else:
             break
-    return "*{}:* ".format(str(user)) + str(sentence.encode('utf8'))
+    sentence = "*{}:* ".format(str(user)) + str(sentence.encode('utf8'))
+
+    # Slack surrounds URLs with < and >, which breaks their linking.  So we
+    # strip that out.
+    sentence = re.sub(
+        '<(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)>',
+        r'\1', sentence)
+    return sentence

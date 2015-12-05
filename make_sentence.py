@@ -72,4 +72,14 @@ def make_sentence(username, prompt=""):
     sentence = re.sub(
         '<(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)>',
         r'\1', sentence)
+
+    # Replace @u1010101 references with actual user names
+    user_ids = re.finditer(r'(@[\d\w]{9})', sentence)
+    for match in user_ids:
+        user_id = match.group()
+        user = session.query(model.User).filter(
+            model.User.id==user_id.strip('@')).first()
+        if not user:
+            continue
+        sentence = sentence.replace(user_id, '@' + str(user))
     return sentence

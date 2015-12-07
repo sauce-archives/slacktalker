@@ -23,3 +23,4 @@
 */5 * * * * unzip /home/sauce/slack-export.zip -d /home/sauce/slack-export
 0 0 * * * bash -c 'for i in $(ls -d slack-export/*/); do /home/sauce/venv/bin/python /home/sauce/slacktalker/parse_words.py $(ls $i*); done' >> /tmp/slack-import-words.log 2>&1
 */5 * * * * bash -c '/home/sauce/venv/bin/python /home/sauce/slacktalker/parse_users.py /home/sauce/slack-export/users.json' >> /tmp/slack-import-users.log 2>&1
+0 */3 * * * /home/sauce/slacktalker/launch_uwsgi.sh

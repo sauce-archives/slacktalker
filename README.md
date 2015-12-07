@@ -3,6 +3,8 @@ About
 
 This runs on `slacktalker.dev.saucelabs.net`.  The main web application is running via nginx and uwsgi.  All code is deployed under the sauce user.  There's no fancy upstart script for uwsgi -- it's just running as a background job.
 
+After a day or so, the web application seems to quit working.  I wouldn't be surprised if this is related to mysql having gone away, but I can't see the traceback for the error.  There's a cron job to restart the web process every few hours.  It's a terrible hack, but oh well.  2 nines of availability should be enough.
+
 Loading New Data
 ================
 

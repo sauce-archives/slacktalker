@@ -20,12 +20,13 @@ As *your user*, run `update_repo.sh` to change to the sauce user and pull down t
 Files
 =====
 
-Deployment
-----------
+Setup / Deployment
+------------------
 
  * `launch_uwsgi.sh` - Creates a socket for nginx to make requests to the application.
  * `iptables.rules` - Prevents access from baddies.  Can be loaded via `sudo iptables-restore < iptables.rules`
  * `nginx-sites-enabled-default` - Should be copied as `/etc/nginx/sites-enabled/default`
+ * `settings.py.example` - Should be copied to `settings.py` and modified accordingly.
 
 Data-loading
 ------------

@@ -7,6 +7,8 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker
 import random
 
+import settings
+
 
 Base = declarative_base()
 
@@ -61,13 +63,15 @@ class User(Base):
 
 def get_session():
     engine = create_engine(
-        'mysql://root:***REMOVED***@localhost/slacktalker?charset=utf8')
+        'mysql://root:{}@localhost/slacktalker?charset=utf8'.format(
+            settings.db_password))
     Session = sessionmaker(bind=engine)
     return Session()
 
 
 if __name__ == '__main__':
-    engine = create_engine('mysql://root:***REMOVED***@localhost/?charset=utf8')
+    engine = create_engine('mysql://root:{}@localhost/?charset=utf8'.format(
+        settings.db_password))
     engine.execute(
         """
         CREATE DATABASE IF NOT EXISTS slacktalker

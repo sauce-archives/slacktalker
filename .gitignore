@@ -2,3 +2,4 @@
 *.sw?
 pickle.db
 .ropeproject
+settings.py

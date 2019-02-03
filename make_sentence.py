@@ -47,7 +47,7 @@ def make_sentence(username, prompt=""):
         word = session.query(model.WordEntry)\
             .filter(model.WordEntry.user == user.id, model.WordEntry.word_prev == prompt)\
             .order_by(func.rand()).first()
-    if word:
+    elif word:
         sentence += word.word_prev + " "
     else:
         word = session.query(model.WordEntry)\

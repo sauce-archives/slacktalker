@@ -110,6 +110,13 @@ if __name__ == '__main__':
                 .format(filename, last_loaded, channel)
         else:
             print "Parsing file: {}".format(filename)
-            parse_file(filename)
+            try:
+                parse_file(filename)
+            except Exception as e:
+                # possible errors when previous parsing was interrupted
+                print "Found error. Doing a session rollback"
+                print e
+                session.rollback()
+                continue
             set_last_loaded(channel, date)
             save_memory()
